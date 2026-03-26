@@ -9,9 +9,20 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
+from fastapi import Request
+import time
+import logging
 from dotenv import load_dotenv
 
 load_dotenv()
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+)
+logger = logging.getLogger("ai_sdip")
 
 from routers import analyze
 
@@ -28,6 +39,18 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = (time.time() - start_time) * 1000
+    
+    # Don't log static file requests to keep logs clean
+    if not request.url.path.startswith("/static") and not request.url.path.startswith("/app"):
+        logger.info(f"{request.method} {request.url.path} - {response.status_code} - {process_time:.2f}ms")
+    
+    return response
 
 app.include_router(analyze.router)
 
