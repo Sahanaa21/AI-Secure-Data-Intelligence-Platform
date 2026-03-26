@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="AI Secure Data Intelligence Platform — AI Gateway, Scanner, Log Analyzer & Risk Engine for enterprise security analysis."/>
+  <title>AI Secure Data Intelligence Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/style.css"/>
+</head>
+<body>
+  <!-- ── Background ── -->
+  <div class="bg-grid"></div>
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- ── Header ── -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 2L29 9V23L16 30L3 23V9L16 2Z" stroke="url(#grad1)" stroke-width="1.5" fill="none"/>
+            <path d="M16 8L23 12V20L16 24L9 20V12L16 8Z" fill="url(#grad2)" opacity="0.5"/>
+            <circle cx="16" cy="16" r="3" fill="url(#grad1)"/>
+            <defs>
+              <linearGradient id="grad1" x1="3" y1="2" x2="29" y2="30" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#00f5ff"/>
+                <stop offset="100%" stop-color="#7c3aed"/>
+              </linearGradient>
+              <linearGradient id="grad2" x1="9" y1="8" x2="23" y2="24" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#00f5ff"/>
+                <stop offset="100%" stop-color="#7c3aed"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-title">AI-SDIP</span>
+          <span class="logo-sub">Secure Data Intelligence Platform</span>
+        </div>
+      </div>
+      <div class="header-badges">
+        <span class="badge badge-live"><span class="pulse-dot"></span>LIVE</span>
+        <span class="badge badge-ai">AI POWERED</span>
+        <span class="badge badge-version">v1.0</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Main Layout ── -->
+  <main class="main">
+
+    <!-- ── Left Panel: Input ── -->
+    <section class="panel panel-input" id="inputPanel">
+      <div class="panel-header">
+        <h2 class="panel-title">
+          <span class="icon">⚡</span> Input Analysis
+        </h2>
+        <p class="panel-subtitle">Select input type and provide data to scan</p>
+      </div>
+
+      <!-- Input Type Tabs -->
+      <div class="tabs" id="inputTabs">
+        <button class="tab active" data-tab="text" id="tab-text">
+          <span>📝</span> Text
+        </button>
+        <button class="tab" data-tab="log" id="tab-log">
+          <span>📋</span> Log File
+        </button>
+        <button class="tab" data-tab="file" id="tab-file">
+          <span>📄</span> Document
+        </button>
+        <button class="tab" data-tab="sql" id="tab-sql">
+          <span>🗄️</span> SQL
+        </button>
+        <button class="tab" data-tab="chat" id="tab-chat">
+          <span>💬</span> Chat
+        </button>
+      </div>
+
+      <!-- Tab Content: Text -->
+      <div class="tab-content active" id="content-text">
+        <textarea
+          id="textInput"
+          class="code-input"
+          placeholder="Paste text, logs, or sensitive data here to scan for security issues..."
+          rows="12"
+        ></textarea>
+      </div>
+
+      <!-- Tab Content: Log File -->
+      <div class="tab-content" id="content-log">
+        <div class="drop-zone" id="logDropZone">
+          <div class="drop-icon">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" width="56" height="56">
+              <path d="M32 4L56 16V48L32 60L8 48V16L32 4Z" stroke="url(#dg1)" stroke-width="1.5" fill="none"/>
+              <path d="M32 20V44M22 30L32 20L42 30" stroke="url(#dg1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <defs>
+                <linearGradient id="dg1" x1="8" y1="4" x2="56" y2="60" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#00f5ff"/>
+                  <stop offset="100%" stop-color="#7c3aed"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <p class="drop-text">Drag & drop your log file here</p>
+          <p class="drop-sub">Supports .log, .txt files</p>
+          <label class="btn btn-outline" for="logFileInput">
+            Browse Files
+          </label>
+          <input type="file" id="logFileInput" accept=".log,.txt" hidden/>
+        </div>
+        <div class="file-selected" id="fileSelected" style="display:none">
+          <div class="file-chip">
+            <span id="selectedFileName">file.log</span>
+            <button class="file-remove" id="removeFile">✕</button>
+          </div>
+          <div class="file-preview" id="filePreview"></div>
+        </div>
+      </div>
+
+      <!-- Tab Content: Document -->
+      <div class="tab-content" id="content-file">
+        <div class="drop-zone" id="docDropZone">
+          <div class="drop-icon">📄</div>
+          <p class="drop-text">Upload a document to scan</p>
+          <p class="drop-sub">Supports .pdf, .docx, .doc files</p>
+          <label class="btn btn-outline" for="docFileInput">Browse Files</label>
+          <input type="file" id="docFileInput" accept=".pdf,.docx,.doc" hidden/>
+        </div>
+        <div class="file-selected" id="docSelected" style="display:none">
+          <div class="file-chip">
+            <span id="selectedDocName">document.pdf</span>
+            <button class="file-remove" id="removeDoc">✕</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Content: SQL -->
+      <div class="tab-content" id="content-sql">
+        <textarea
+          id="sqlInput"
+          class="code-input monospace"
+          placeholder="-- Paste SQL queries or database content to scan for sensitive data
+SELECT * FROM users WHERE email='admin@company.com' AND password='plaintext';"
+          rows="12"
+        ></textarea>
+      </div>
+
+      <!-- Tab Content: Chat -->
+      <div class="tab-content" id="content-chat">
+        <textarea
+          id="chatInput"
+          class="code-input"
+          placeholder="Paste chat logs or conversation data to scan for leaked credentials, PII, or sensitive information..."
+          rows="12"
+        ></textarea>
+      </div>
+
+      <!-- Options -->
+      <div class="options-bar">
+        <label class="option-toggle">
+          <input type="checkbox" id="optMask" checked/>
+          <span class="toggle-slider"></span>
+          <span class="option-label">Mask Sensitive Data</span>
+        </label>
+        <label class="option-toggle">
+          <input type="checkbox" id="optBlock"/>
+          <span class="toggle-slider"></span>
+          <span class="option-label">Block High Risk</span>
+        </label>
+        <label class="option-toggle">
+          <input type="checkbox" id="optAI" checked/>
+          <span class="toggle-slider"></span>
+          <span class="option-label">AI Insights</span>
+        </label>
+      </div>
+
+      <button class="btn btn-primary btn-analyze" id="analyzeBtn">
+        <span class="btn-icon">🔍</span>
+        <span id="analyzeBtnText">Analyze Now</span>
+        <div class="btn-shimmer"></div>
+      </button>
+    </section>
+
+    <!-- ── Right Panel: Results ── -->
+    <section class="panel panel-results" id="resultsPanel">
+      <!-- Empty State -->
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">🛡️</div>
+        <h3>Ready to Scan</h3>
+        <p>Enter data on the left and click <strong>Analyze Now</strong> to begin security analysis.</p>
+        <div class="empty-features">
+          <div class="mini-feat"><span>🔑</span> API Key Detection</div>
+          <div class="mini-feat"><span>🔒</span> Password Scanner</div>
+          <div class="mini-feat"><span>📊</span> Log Analyzer</div>
+          <div class="mini-feat"><span>🤖</span> AI Insights</div>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div class="loading-state" id="loadingState" style="display:none">
+        <div class="scanner-animation">
+          <div class="scan-ring scan-ring-1"></div>
+          <div class="scan-ring scan-ring-2"></div>
+          <div class="scan-ring scan-ring-3"></div>
+          <div class="scan-core">🔍</div>
+        </div>
+        <h3 class="loading-title">Scanning...</h3>
+        <div class="loading-steps" id="loadingSteps">
+          <div class="load-step active" id="step1">Parsing content</div>
+          <div class="load-step" id="step2">Running detection engine</div>
+          <div class="load-step" id="step3">Risk classification</div>
+          <div class="load-step" id="step4">Generating AI insights</div>
+        </div>
+      </div>
+
+      <!-- Results Content -->
+      <div class="results-content" id="resultsContent" style="display:none">
+
+        <!-- Risk Dashboard -->
+        <div class="risk-dashboard" id="riskDashboard">
+          <div class="risk-score-card" id="riskScoreCard">
+            <div class="risk-score-inner">
+              <div class="risk-score-number" id="riskScoreNum">0</div>
+              <div class="risk-score-label">Risk Score</div>
+            </div>
+            <svg class="risk-ring" viewBox="0 0 120 120">
+              <circle class="ring-bg" cx="60" cy="60" r="52"/>
+              <circle class="ring-fill" id="riskRingFill" cx="60" cy="60" r="52"
+                stroke-dasharray="326.7" stroke-dashoffset="326.7"/>
+            </svg>
+          </div>
+          <div class="risk-meta">
+            <div class="risk-level-badge" id="riskLevelBadge">—</div>
+            <div class="risk-details-row">
+              <div class="risk-detail-item">
+                <span class="rd-label">Findings</span>
+                <span class="rd-value" id="totalFindings">0</span>
+              </div>
+              <div class="risk-detail-item">
+                <span class="rd-label">Lines</span>
+                <span class="rd-value" id="totalLines">0</span>
+              </div>
+              <div class="risk-detail-item">
+                <span class="rd-label">Action</span>
+                <span class="rd-value" id="actionTaken">—</span>
+              </div>
+              <div class="risk-detail-item">
+                <span class="rd-label">AI</span>
+                <span class="rd-value" id="aiPoweredBadge">—</span>
+              </div>
+            </div>
+            <!-- Severity breakdown -->
+            <div class="severity-bar-row">
+              <div class="sev-bar-item">
+                <span class="sev-label sev-critical">Critical</span>
+                <span class="sev-count" id="sevCritical">0</span>
+              </div>
+              <div class="sev-bar-item">
+                <span class="sev-label sev-high">High</span>
+                <span class="sev-count" id="sevHigh">0</span>
+              </div>
+              <div class="sev-bar-item">
+                <span class="sev-label sev-medium">Medium</span>
+                <span class="sev-count" id="sevMedium">0</span>
+              </div>
+              <div class="sev-bar-item">
+                <span class="sev-label sev-low">Low</span>
+                <span class="sev-count" id="sevLow">0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Blocked Alert -->
+        <div class="blocked-alert" id="blockedAlert" style="display:none">
+          🚫 <strong>Content Blocked</strong> — High risk content was blocked by the policy engine.
+        </div>
+
+        <!-- Summary -->
+        <div class="card" id="summaryCard">
+          <div class="card-header">
+            <span class="card-icon">📋</span>
+            <h3>Summary</h3>
+            <span class="ai-badge" id="aiBadge" style="display:none">✨ AI</span>
+          </div>
+          <p class="summary-text" id="summaryText">—</p>
+        </div>
+
+        <!-- Insights + Anomalies -->
+        <div class="cards-row">
+          <div class="card" id="insightsCard">
+            <div class="card-header">
+              <span class="card-icon">💡</span>
+              <h3>AI Insights</h3>
+            </div>
+            <ul class="insight-list" id="insightsList"></ul>
+          </div>
+          <div class="card" id="anomaliesCard">
+            <div class="card-header">
+              <span class="card-icon">⚠️</span>
+              <h3>Anomalies</h3>
+            </div>
+            <ul class="insight-list" id="anomaliesList"></ul>
+            <div class="card-header" style="margin-top:1rem">
+              <span class="card-icon">🛠️</span>
+              <h3>Recommendations</h3>
+            </div>
+            <ul class="insight-list" id="recommendationsList"></ul>
+          </div>
+        </div>
+
+        <!-- Findings Table -->
+        <div class="card" id="findingsCard">
+          <div class="card-header">
+            <span class="card-icon">🔎</span>
+            <h3>Findings <span class="findings-count" id="findingsCountBadge">0</span></h3>
+            <div class="findings-filters" id="findingsFilters">
+              <button class="filter-btn active" data-filter="all">All</button>
+              <button class="filter-btn critical" data-filter="critical">Critical</button>
+              <button class="filter-btn high" data-filter="high">High</button>
+              <button class="filter-btn medium" data-filter="medium">Medium</button>
+              <button class="filter-btn low" data-filter="low">Low</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="findings-table" id="findingsTable">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Type</th>
+                  <th>Risk</th>
+                  <th>Line</th>
+                  <th>Content Preview</th>
+                </tr>
+              </thead>
+              <tbody id="findingsBody"></tbody>
+            </table>
+            <div class="no-findings" id="noFindings" style="display:none">No findings detected ✅</div>
+          </div>
+        </div>
+
+        <!-- Log Viewer -->
+        <div class="card" id="logViewerCard" style="display:none">
+          <div class="card-header">
+            <span class="card-icon">📋</span>
+            <h3>Log Viewer <span class="log-legend">
+              <span class="legend-dot critical"></span>Critical
+              <span class="legend-dot high"></span>High
+              <span class="legend-dot medium"></span>Medium
+              <span class="legend-dot low"></span>Low
+            </span></h3>
+          </div>
+          <div class="log-viewer" id="logViewer"></div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ── Brute Force Alert Toast ── -->
+  <div class="toast" id="bruteForceToast" style="display:none">
+    🚨 <strong>Brute Force Detected!</strong> Multiple authentication failures found in logs.
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
