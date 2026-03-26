@@ -10,7 +10,8 @@
 </p>
 
 <p align="center">
-  <strong>An intelligent, privacy-first log analysis engine that detects, masks, and evaluates security risks in application data using a hybrid deterministic and AI-driven pipeline.</strong>
+  <strong>An intelligent, privacy-first log analysis engine that detects, masks, and evaluates security risks in application data.</strong><br>
+  <a href="https://ai-secure-data-intelligence-platform-byiw.onrender.com"><strong>🚀 Try the Live Demo Here</strong></a>
 </p>
 
 ---
